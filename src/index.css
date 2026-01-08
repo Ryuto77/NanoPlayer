@@ -489,3 +489,16 @@ button:hover {
   }
 }
 
+/* LIKE BUTTON — PLAYER */
+.like-btn {
+  margin-left: 10px;
+  font-size: 22px;        /* bigger */
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.like-btn:hover {
+  transform: scale(1.1);
+}

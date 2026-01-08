@@ -240,6 +240,18 @@ const endSeek = () => {
     );
   };
 
+  const toggleLike = (songId) => {
+  setLiked((prev) => {
+    const updated = prev.includes(songId)
+      ? prev.filter((id) => id !== songId)
+      : [...prev, songId];
+
+    localStorage.setItem("likedSongs", JSON.stringify(updated));
+    return updated;
+  });
+};
+
+
   const renamePlaylist = (id, name) => {
     setPlaylists((p) =>
       p.map((pl) => (pl.id === id ? { ...pl, name } : pl))
@@ -305,6 +317,7 @@ const endSeek = () => {
 
         playSong,
         togglePlay,
+        toggleLike,
         playNext,
         playPrev,
         seek,

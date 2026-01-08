@@ -15,10 +15,12 @@ const PlayerBar = () => {
     volume,
     muted,
     shuffle,
+    liked,
     repeat,
     mini,
 
     togglePlay,
+    toggleLike,
     playNext,
     playPrev,
     seek,
@@ -45,11 +47,13 @@ const PlayerBar = () => {
           />
         )}
         <div className="player-meta">
-          <strong>{currentSong.title}</strong>
-          {!mini && (
-            <div className="muted">{currentSong.artist}</div>
-          )}
-        </div>
+  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+    <strong>{currentSong.title}</strong>
+  </div>
+
+  {!mini && <div className="muted">{currentSong.artist}</div>}
+</div>
+
       </div>
 
       {/* CENTER */}
@@ -98,23 +102,31 @@ const PlayerBar = () => {
         {/* PROGRESS */}
         {!mini && (
           <div className="progress-row">
-            <span className="time">{formatTime(progress)}</span>
+  <span className="time">{formatTime(progress)}</span>
 
-            <input
-  type="range"
-  min="0"
-  max={duration || 0}
-  value={progress}
-  onMouseDown={startSeek}
-  onTouchStart={startSeek}
-  onChange={(e) => seek(Number(e.target.value))}
-  onMouseUp={endSeek}
-  onTouchEnd={endSeek}
-/>
+  <input
+    type="range"
+    min="0"
+    max={duration || 0}
+    value={progress}
+    onMouseDown={startSeek}
+    onTouchStart={startSeek}
+    onChange={(e) => seek(Number(e.target.value))}
+    onMouseUp={endSeek}
+    onTouchEnd={endSeek}
+  />
 
+  <span className="time">{formatTime(duration)}</span>
 
-            <span className="time">{formatTime(duration)}</span>
-          </div>
+  {/* LIKE BUTTON */}
+  <button
+    className="like-btn"
+    onClick={() => toggleLike(currentSong.id)}
+    title="Like"
+  >
+    {liked.includes(currentSong.id) ? "❤️" : "🤍"}
+  </button>
+</div>
         )}
       </div>
 
