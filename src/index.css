@@ -641,14 +641,12 @@ button:hover {
   }
 
   .main {
-    padding: 10px;
+    padding: 15px;
   }
- .card {
-  padding-bottom: 30px; /* to avoid plus button overlap on small screens */ 
-  }
+
   /* PLAYER BAR — MOBILE */
   .player {
-    min-height: 75px;
+    min-height: 70px;
     grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
     grid-template-areas:
