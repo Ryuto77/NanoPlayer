@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Local debug artifacts (created during local serve/probe)
+.serve.*
+.vite.*
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

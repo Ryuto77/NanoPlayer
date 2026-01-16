@@ -257,6 +257,8 @@ body {
   -webkit-overflow-scrolling: touch;
   overflow-y: auto;
   padding: 0 10px;
+  /* Reserve scrollable space for the fixed player bar so last cards aren't covered */
+  padding-bottom: 120px;
 }
 
 /* ======================
@@ -621,6 +623,7 @@ button:hover {
   /* Main takes full space */
   .main {
     padding: 0 12px;
+    padding-bottom: 130px;
   }
 
   /* Reserve a bit more space for the player bar on tablet */
@@ -642,6 +645,7 @@ button:hover {
 
   .main {
     padding: 15px;
+    padding-bottom: 140px;
   }
 
   /* PLAYER BAR — MOBILE */
