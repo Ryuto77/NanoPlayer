@@ -465,6 +465,7 @@ button:hover {
 .player.mini {
   grid-template-columns: 1fr auto;
   height: 56px;
+  min-height: 56px;
 }
 
 .player.mini .player-center,
@@ -621,6 +622,11 @@ button:hover {
   .main {
     padding: 0 12px;
   }
+
+  /* Reserve a bit more space for the player bar on tablet */
+  .app {
+    padding-bottom: 100px;
+  }
 }
 
 /* ======================
@@ -630,6 +636,8 @@ button:hover {
   /* App becomes single column */
   .app {
     flex-direction: column;
+    /* Mobile player becomes taller (2 rows + safe-area padding), so reserve more space */
+    padding-bottom: 120px;
   }
 
   .main {
@@ -649,8 +657,8 @@ button:hover {
     padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
   }
 
-  /* Spotify-style mobile: remove volume controls entirely */
-  .volume-row.volume-row-center {
+  /* Mobile: keep at least a mute toggle (otherwise you can get stuck muted/volume=0) */
+  .player-right .volume-row input[type="range"] {
     display: none;
   }
 
@@ -683,6 +691,12 @@ button:hover {
 
   .player-meta .muted {
     font-size: 11px;
+  }
+
+  /* Fix: ensure mini mode can actually shrink on mobile (override `.player { min-height: 84px; }`) */
+  .player.mini {
+    min-height: 56px;
+    height: 56px;
   }
 }
 

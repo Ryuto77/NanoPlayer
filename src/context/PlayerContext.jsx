@@ -69,7 +69,10 @@ export const PlayerProvider = ({ children }) => {
     audio.onended = () => {
       if (repeat === "one") {
         audio.currentTime = 0;
-        audio.play();
+        audio
+          .play()
+          .then(() => setIsPlaying(true))
+          .catch(() => setIsPlaying(false));
         return;
       }
 
@@ -95,12 +98,14 @@ export const PlayerProvider = ({ children }) => {
 
     if (!audio.src) {
       audio.src = src;
+      audio.currentTime = 0;
       audio.volume = muted ? 0 : volume;
       audio
         .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false))
         .finally(() => {
           transitioningRef.current = false;
-          setIsPlaying(true);
         });
       return;
     }
@@ -120,10 +125,13 @@ export const PlayerProvider = ({ children }) => {
 
         audio
           .play()
-          .then(() => fadeIn())
+          .then(() => {
+            setIsPlaying(true);
+            fadeIn();
+          })
+          .catch(() => setIsPlaying(false))
           .finally(() => {
             transitioningRef.current = false;
-            setIsPlaying(true);
           });
       }
     }, 100);
@@ -165,12 +173,18 @@ export const PlayerProvider = ({ children }) => {
 
   const togglePlay = () => {
     if (currentIndex === null) return;
+    const audio = audioRef.current;
+
     if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
+      audio.pause();
+      setIsPlaying(false);
+      return;
     }
-    setIsPlaying(!isPlaying);
+
+    audio
+      .play()
+      .then(() => setIsPlaying(true))
+      .catch(() => setIsPlaying(false));
   };
 
   const playNext = () => {

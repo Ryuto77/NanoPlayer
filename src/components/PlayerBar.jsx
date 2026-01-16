@@ -127,9 +127,12 @@ const PlayerBar = () => {
           </div>
         )}
 
-        {/* VOLUME (below controls/seek) */}
+      </div>
+
+      {/* RIGHT */}
+      <div className="player-right">
         {!mini && (
-          <div className="volume-row volume-row-center">
+          <div className="volume-row">
             <button onClick={() => setMuted(!muted)}>
               {muted ? "🔇" : "🔊"}
             </button>
@@ -143,10 +146,7 @@ const PlayerBar = () => {
             />
           </div>
         )}
-      </div>
 
-      {/* RIGHT */}
-      <div className="player-right">
         <button onClick={() => setMini(!mini)}>
           {mini ? "⬆" : "⬇"}
         </button>
