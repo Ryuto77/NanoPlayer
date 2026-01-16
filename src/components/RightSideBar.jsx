@@ -4,7 +4,7 @@ const RightSideBar = ({ panel }) => {
   const { queue, recent } = usePlayer();
 
   return (
-    <div className="right-sidebar">
+    <div className="right-sidebar-content">
       {panel === "queue" && (
         <>
           <h3>Queue</h3>

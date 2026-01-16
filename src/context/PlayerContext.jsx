@@ -210,9 +210,18 @@ export const PlayerProvider = ({ children }) => {
   };
 
  const seek = (t) => {
-  if (!audioRef.current.duration) return;
-  audioRef.current.currentTime = t;
-  setProgress(t); // manual update while seeking
+  const audio = audioRef.current;
+  const d = audio.duration;
+  const finite = Number.isFinite(d) && d > 0;
+  const next = finite ? Math.min(Math.max(t, 0), d) : Math.max(t, 0);
+
+  try {
+    audio.currentTime = next;
+  } catch {
+    // ignore (some browsers throw if media isn't seekable yet)
+  }
+
+  setProgress(next); // manual update while seeking
 };
 
 const startSeek = () => {

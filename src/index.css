@@ -1,3 +1,188 @@
+/* Progress + Volume Row */
+.progress-volume-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
+
+.progress-row {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding-left: 0;
+  width: min(700px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.volume-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 90px;
+}
+
+.volume-row input[type="range"] {
+  width: 70px;
+}
+
+.volume-row button {
+  font-size: 16px;
+}
+
+.volume-row.volume-row-center {
+  margin-top: 6px;
+}
+
+@media (max-width: 767px) {
+  .progress-volume-row {
+    gap: 8px;
+  }
+  .progress-row {
+    padding-left: 4px;
+    gap: 6px;
+    width: 60%;
+  }
+  .volume-row {
+    gap: 4px;
+    min-width: 60px;
+  }
+
+  .volume-row input[type="range"] {
+    width: 50px;
+  }
+}
+/* ======================
+   HAMBURGER MENU
+====================== */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 1001;
+  width: 38px;
+  height: 38px;
+  background: #181818;
+  border: none;
+  border-radius: 8px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0004;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+@media (max-width: 1099px) {
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* Sidebar Drawer (mobile/tablet) */
+.sidebar-drawer {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80vw;
+  max-width: 320px;
+  height: 100vh;
+  background: #000;
+  z-index: 1100;
+  box-shadow: 2px 0 16px #0008;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  overflow-y: auto;
+}
+.sidebar-drawer.open {
+  display: block;
+  transform: translateX(0);
+}
+.close-drawer {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+/* Overlay for drawer and bottom sheet */
+.drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000a;
+  z-index: 1099;
+}
+
+/* Hide desktop sidebar on mobile/tablet */
+@media (max-width: 1099px) {
+  .sidebar.desktop-only,
+  .right-sidebar.desktop-only {
+    display: none !important;
+  }
+}
+
+/* Right Sidebar Bottom Sheet (mobile/tablet) */
+.right-bottom-sheet {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60vh;
+  max-height: 420px;
+  background: #181818;
+  z-index: 1200;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  box-shadow: 0 -2px 16px #0008;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  overflow-y: auto;
+}
+.right-bottom-sheet.open {
+  display: block;
+  transform: translateY(0);
+}
+.close-bottom-sheet {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 32px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* Hide hamburger and drawers on desktop */
+@media (min-width: 1100px) {
+  .hamburger,
+  .sidebar-drawer,
+  .drawer-backdrop,
+  .right-bottom-sheet {
+    display: none !important;
+  }
+}
 * {
   margin: 0;
   padding: 0;
@@ -30,6 +215,7 @@ body {
   padding: 20px;
   border-right: 1px solid #222;
   overflow: hidden;
+  text-align: left;
 }
 
 .sidebar p {
@@ -54,6 +240,15 @@ body {
   margin-bottom: 10px;
 }
 
+.logout-btn {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
 /* ======================
    MAIN CONTENT
 ====================== */
@@ -71,16 +266,13 @@ body {
   width: 260px;
   min-width: 260px;
   background: #000;
-  padding: 20px;
+  padding: 0;
   border-left: 1px solid #222;
   overflow: hidden;
 }
 
-/* Hide right sidebar on small screens */
-@media (max-width: 1100px) {
-  .right-sidebar {
-    display: none;
-  }
+.right-sidebar-content {
+  padding: 20px;
 }
 
 /* ======================
@@ -175,7 +367,8 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 90px;
+  height: auto;
+  min-height: 90px;
   background: #181818;
   border-top: 1px solid #333;
   display: grid;
@@ -214,6 +407,7 @@ button:hover {
 .player {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
+  grid-template-areas: "left center right";
   align-items: center;
   gap: 10px;
 }
@@ -223,6 +417,8 @@ button:hover {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
+  grid-area: left;
 }
 
 .player-thumb {
@@ -234,6 +430,7 @@ button:hover {
 
 .player-meta {
   overflow: hidden;
+  min-width: 0;
 }
 
 /* CENTER */
@@ -241,12 +438,14 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  grid-area: center;
 }
 
 .controls {
   display: flex;
   gap: 12px;
   align-items: center;
+  flex-wrap: nowrap;
 }
 
 .controls button.active {
@@ -259,11 +458,13 @@ button:hover {
   justify-content: flex-end;
   align-items: center;
   gap: 8px;
+  grid-area: right;
 }
 
 /* MINI MODE */
 .player.mini {
   grid-template-columns: 1fr auto;
+  height: 56px;
 }
 
 .player.mini .player-center,
@@ -416,11 +617,6 @@ button:hover {
    RESPONSIVE — TABLETS
 ====================== */
 @media (max-width: 1099px) {
-  /* Hide right sidebar */
-  .right-sidebar {
-    display: none;
-  }
-
   /* Main takes full space */
   .main {
     padding: 0 12px;
@@ -431,12 +627,6 @@ button:hover {
    RESPONSIVE — MOBILE
 ====================== */
 @media (max-width: 767px) {
-  /* Hide both sidebars */
-  .sidebar,
-  .right-sidebar {
-    display: none;
-  }
-
   /* App becomes single column */
   .app {
     flex-direction: column;
@@ -448,44 +638,51 @@ button:hover {
 
   /* PLAYER BAR — MOBILE */
   .player {
-    height: 72px;
+    min-height: 84px;
     grid-template-columns: 1fr auto;
-    padding: 0 12px;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "left right"
+      "center center";
+    padding: 8px 10px;
+    row-gap: 4px;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
   }
 
-  /* Hide extra player sections */
-  .player-right input,
-  .progress-row {
+  /* Spotify-style mobile: remove volume controls entirely */
+  .volume-row.volume-row-center {
     display: none;
   }
 
+  /* No extra controls inside the right column in mobile now (only the mini toggle) */
+
   /* Make controls tighter */
   .controls {
-    gap: 8px;
+    gap: 6px;
   }
 
   .controls button {
-    font-size: 16px;
+    font-size: 15px;
   }
 
   /* Thumbnail smaller */
   .player-thumb {
-    width: 48px;
-    height: 48px;
+    width: 38px;
+    height: 38px;
   }
 
   /* Text clamp */
   .player-meta strong {
-    font-size: 14px;
+    font-size: 13px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 140px;
+    max-width: 110px;
     display: block;
   }
 
   .player-meta .muted {
-    font-size: 12px;
+    font-size: 11px;
   }
 }
 
@@ -501,4 +698,9 @@ button:hover {
 
 .like-btn:hover {
   transform: scale(1.1);
+}
+
+/* Like placement variant: on seek row (all breakpoints) */
+.like-btn.like-inline {
+  display: inline-flex;
 }

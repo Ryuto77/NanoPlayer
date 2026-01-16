@@ -99,58 +99,54 @@ const PlayerBar = () => {
           </button>
         </div>
 
-        {/* PROGRESS */}
+        {/* PROGRESS (centered under controls) */}
         {!mini && (
           <div className="progress-row">
-  <span className="time">{formatTime(progress)}</span>
+            <span className="time">{formatTime(progress)}</span>
+            <input
+              type="range"
+              min="0"
+              max={duration || 1}
+              value={progress}
+              onPointerDown={startSeek}
+              onPointerUp={endSeek}
+              onPointerCancel={endSeek}
+              onMouseLeave={endSeek}
+              onChange={(e) => seek(Number(e.target.value))}
+            />
+            <span className="time">{formatTime(duration)}</span>
 
-  <input
-    type="range"
-    min="0"
-    max={duration || 0}
-    value={progress}
-    onMouseDown={startSeek}
-    onTouchStart={startSeek}
-    onChange={(e) => seek(Number(e.target.value))}
-    onMouseUp={endSeek}
-    onTouchEnd={endSeek}
-  />
-
-  <span className="time">{formatTime(duration)}</span>
-
-  {/* LIKE BUTTON */}
-  <button
-    className="like-btn"
-    onClick={() => toggleLike(currentSong.id)}
-    title="Like"
-  >
-    {liked.includes(currentSong.id) ? "❤️" : "🤍"}
-  </button>
-</div>
+            {/* Like button (mobile placement: on seek row) */}
+            <button
+              className="like-btn like-inline"
+              onClick={() => toggleLike(currentSong.id)}
+              title="Like"
+            >
+              {liked.includes(currentSong.id) ? "❤️" : "🤍"}
+            </button>
+          </div>
         )}
-      </div>
 
-      {/* RIGHT */}
-      <div className="player-right">
+        {/* VOLUME (below controls/seek) */}
         {!mini && (
-          <>
+          <div className="volume-row volume-row-center">
             <button onClick={() => setMuted(!muted)}>
               {muted ? "🔇" : "🔊"}
             </button>
-
             <input
               type="range"
               min="0"
               max="1"
               step="0.01"
               value={volume}
-              onChange={(e) =>
-                setVolume(Number(e.target.value))
-              }
+              onChange={(e) => setVolume(Number(e.target.value))}
             />
-          </>
+          </div>
         )}
+      </div>
 
+      {/* RIGHT */}
+      <div className="player-right">
         <button onClick={() => setMini(!mini)}>
           {mini ? "⬆" : "⬇"}
         </button>
